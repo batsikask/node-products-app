@@ -1,15 +1,16 @@
+const logger = require('../logger/logger')
 const User = require('../models/user.model')
 
 exports.findAll = async(req, res) => {
-    console.log("Find all user's products")
+    console.log("Find all users' products")
 
     try {
         const result = await User.find({}, {_id: 0, username: 1, products: 1})
         res.status(200).json({data: result})
-        console.log("Reading all users products")
+        logger.debug("Success in fetching all users' products")
     } catch (err) {
         res.status(400).json({data: err})
-        console.log("Problem in reading user's products")
+        logger.error(`Error while fetching all users' products -- ${err}`)
     }
 }
 
@@ -20,10 +21,10 @@ exports.findOne = async(req, res) => {
     try {
         const result = await User.findOne({username: username}, {_id: 0, username: 1, products: 1})
         res.status(200).json({data: result})
-        console.log("Success in finding products for user: ", username)
+        logger.debug(`Found products for user: ${username}`)
     } catch (err) {
         res.status(400).json({data: err})
-        console.log("Problem in reading user's products")
+        logger.error(`Error while fetching a user's products -- ${err}`)
     }
 }
 
@@ -40,10 +41,10 @@ exports.create = async(req, res) => {
             }}
         )
         res.status(200).json({data: result})
-        console.log("Inserting products to user succesfull")
+        logger.debug(`Products: ${products} inserted to User: ${username}`)
     } catch (err) {
         res.status(400).json({data: err})
-        console.log("Problem in inserting user's products")
+        logger.error(`Error while inserting products to a user -- ${err}`)
     }
 }
 
@@ -63,10 +64,10 @@ exports.update = async (req, res) => {
             }
         )
         res.status(200).json({data: result})
-        console.log("Successs in updating product ", username)
+        logger.debug(`Updated quantity for product with ID: ${_id}, User: ${username} `)
     } catch (err) {
         res.status(400).json({data: err})
-        console.log("Problem in updating product ", username)
+        logger.error(`Error while updating a product for User: ${username} -- ${err}`)
     }
 }
 
@@ -85,10 +86,10 @@ exports.delete = async (req, res) => {
                 }
             }
         )
-        console.log("Success in deleting product: ", username)
+        logger.debug(`Deleted a product from User: ${username}`)
         res.status(200).json({data: result})
     } catch (err) {
         res.status(400).json({data: result})
-        console.log("Problem in deleting product: ", username)
+        logger.error(`Error while deleting a product from User: ${username} -- ${err}`)
     }
 }

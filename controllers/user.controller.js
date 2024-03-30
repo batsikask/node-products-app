@@ -1,12 +1,14 @@
 const User = require('../models/user.model');
+const logger = require('../logger/logger')
 
 exports.findAll = async (req, res) => {
     console.log("Find all users");
     try {
         const result = await User.find();
         res.status(200).json({data: result});
+        logger.debug("Success in reading all users")
     } catch (err) {
-        console.log(`Problem in reading users, ${err}`);
+        logger.error(`Error while fetching all users -- ${err}`)
     }
 
 }
@@ -17,8 +19,9 @@ exports.findOne = async (req, res) => {
     try {
         const result = await User.findOne({username: username});
         res.status(200).json({data: result});
+        logger.debug(`Found a user: ${result}`)
     } catch (err) {
-        console.log(`Problem in reading users, ${err}`);
+        logger.error(`Error while fetching user -- ${err}`)
     }
 }
 
@@ -37,10 +40,10 @@ exports.create = async (req, res) => {
     try {
         const result = await newUser.save()
         res.status(200).json({data: result})
-        console.log("User inserted")
+        logger.debug(`User inserted -- ${newUser}`)
     } catch (err) {
         res.status(400).json({data: err})
-        console.log(`Problem in creating user, ${err}`)
+        logger.error(`Error while inserting a user -- ${err}`)
     }
 }
 
@@ -60,10 +63,10 @@ exports.update = async(req, res) => {
             {new: true}
         )
         res.status(200).json({data: result})
-        console.log("User updated")
+        logger.debug(`Updated user: ${updateUser}`)
     } catch (err) {
         res.status(400).json({data: err})
-        console.log(`Problem in updating user: ${err}`)
+        logger.error(`Error while updating a user -- ${err}`)
     }
 }
 
@@ -73,9 +76,9 @@ exports.delete = async(req, res) => {
     try {
         const result = await User.findOneAndDelete({username: username})
         res.status(200).json({data: result})
-        console.log("User deleted: ", username)
+        logger.debug(`User deleted -- ${username}`)
     } catch (err) {
         res.status(404).json({data: err})
-        console.log(`Error in deleting user : ${username}`)
+        logger.error(`Error while deleting a user -- ${err}`)
     }
 }
