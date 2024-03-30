@@ -11,8 +11,12 @@ mongoose.connect(process.env.MONGODB_URI)
         })
 
 const user = require('./routes/user.route');
+const product = require('.routes/product.route');
 
 app.use('/api/users', user);
+app.use('/api/products', product);
+
+
 
 app.listen(port, ()=> {
     console.log('Server is running');
