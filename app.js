@@ -1,7 +1,7 @@
-const express = require('express');
-const app = express();
-const port = 3000;
-const mongoose = require('mongoose');
+const express = require('express')
+const app = express()
+const port = 3000
+const mongoose = require('mongoose')
 
 
 mongoose.connect(process.env.MONGODB_URI)
@@ -10,14 +10,15 @@ mongoose.connect(process.env.MONGODB_URI)
             err => {console.log("Failed to connect to MongoDB, err")}
         })
 
-const user = require('./routes/user.route');
-const product = require('.routes/product.route');
+const user = require('./routes/user.route')
+const product = require('.routes/product.route')
+const userProduct = require('./routes/user.products.routes')
 
-app.use('/api/users', user);
-app.use('/api/products', product);
-
+app.use('/api/users', user)
+app.use('/api/products', product)
+app.use('/api/user-products', userProduct)
 
 
 app.listen(port, ()=> {
-    console.log('Server is running');
+    console.log('Server is running')
 })
