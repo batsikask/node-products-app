@@ -16,9 +16,9 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = async (req, res) => {
     console.log("Find a product")
-    const id = req.params.id
+    const product = req.params.product
     try {
-        const result = Products.findOne({_id: id})
+        const result = await Product.findOne({product: product})
         logger.debug(`Found a product: ${result}`)
     } catch (err) {
         res.status(404).json({data: err})
