@@ -4,6 +4,7 @@ const port = 3000
 const mongoose = require('mongoose')
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger')
@@ -24,7 +25,7 @@ const user = require('./routes/user.route')
 const product = require('./routes/product.route')
 const userProduct = require('./routes/user.products.route')
 
-app.use(express.urlencoded({ extended: true }));
+
 app.use('/', express.static('files'))
 app.use('/api/users', user)
 app.use('/api/products', product)

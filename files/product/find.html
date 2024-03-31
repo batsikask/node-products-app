@@ -32,8 +32,8 @@
               Χρήστες
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="./create.html">Δημιουργία</a></li>
-              <li><a class="dropdown-item" href="./find.html">Εμφάνιση</a></li>
+              <li><a class="dropdown-item" href="../user/create.html">Δημιουργία</a></li>
+              <li><a class="dropdown-item" href="../user/find.html">Εμφάνιση</a></li>
             </ul>
           </li>
 
@@ -42,8 +42,8 @@
               Προϊόντα
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="../product/create.html">Δημιουργία</a></li>
-              <li><a class="dropdown-item" href="../product/find.html">Εμφάνιση</a></li>
+              <li><a class="dropdown-item" href="./create.html">Δημιουργία</a></li>
+              <li><a class="dropdown-item" href="./find.html">Εμφάνιση</a></li>
             </ul>
           </li>
 
@@ -72,16 +72,14 @@
   
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <table class="table table-striped table-hover caption-top w-auto" id="userTable">
-          <caption>List of users</caption>
+      <table class="table table-striped table-hover caption-top w-auto" id="productTable">
+          <caption>List of products</caption>
           <thead>
               <tr>
-                <th>Username</th>
-                <th>Όνομα</th>
-                <th>Επίθετο</th>
-                <th>Email</th>
-                <th>Διεύθυνση</th>
-                <th>Τηλέφωνο</th>
+                <th>Τίτλος</th>
+                <th>Τιμή</th>
+                <th>Περιγραφή</th>
+                <th>Ποσότητα</th>
               </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -101,7 +99,7 @@
     crossorigin="anonymous">
   </script> 
 
-  <script src="../assets/js/user.scripts.js"></script>
+  <script src="../assets/js/product.scripts.js"></script>
 
 </body>
 </html>

@@ -9,6 +9,7 @@ exports.findAll = async (req, res) => {
         res.status(200).json({data: result});
         logger.debug("Success in fetching all products")
     } catch (err) {
+        res.status(404).json({data: err})
         logger.error(`Error while fetching all products -- ${err}`)
     }
 }
@@ -20,6 +21,7 @@ exports.findOne = async (req, res) => {
         const result = Products.findOne({_id: id})
         logger.debug(`Found a product: ${result}`)
     } catch (err) {
+        res.status(404).json({data: err})
         logger.error(`Error while fetching a product -- ${err}`)
     }
 }
@@ -33,7 +35,7 @@ exports.create = async (req, res) => {
         quantity: req.body.quantity
     })
     try {
-        const result = await newUser.save()
+        const result = await newProduct.save()
         res.status(200).json({data: result})
         logger.debug(`Product inserted -- ${newProduct}`)
     } catch (err) {
@@ -64,14 +66,14 @@ exports.update = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    const id = req.params.id
-    console.log(`Deleting product with id: , ${id}`)
+    const product = req.params.product
+    console.log("Deleting product: " + product)
     try {
-        const result = await User.findOneAndDelete({_id: id})
+        const result = await Product.findOneAndDelete({product: product})
         res.status(200).json({data: result})
-        logger.debug(`Product deleted, ID: ${id} `)
+        logger.debug(`Product deleted: ${product} `)
     } catch (err) {
-        res.status(400).json({data: err})
-        logger.error(`Error while deleting a user -- ${err}`)
+        res.status(404).json({data: err})
+        logger.error(`Error while deleting a product -- ${err}`)
     }
 }

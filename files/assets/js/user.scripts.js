@@ -6,16 +6,13 @@ $(document).ready(function(){
     dataType:'JSON'
   })
   .done(function(response){
-    // console.log(">>", response);
     let data = response.data;
     let status = response.status
     
-    // if (status) { 
       if (data.length > 0) { 
         createTbody(data);
     } else {
         alert(false,'Πρόβλημα στην αναζήτηση των χρηστών ('+ data.message + ')');
-        // console.log(data);
     }
   });
 
@@ -45,10 +42,8 @@ $(document).ready(function(){
       type: "post",
       data: item,
       dataType: "JSON",
-      // encode: true,
     })
     .done( function(response) {
-      // console.log(">>", response);
       
       let data = response.data;
       let status = response.status
@@ -59,10 +54,9 @@ $(document).ready(function(){
           $('#frmUser')[0].reset();
           window.location.replace("http://localhost:3000/user/find.html")
       } else {
-          console.log(false,'Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
-          alert(false,'Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
+          console.log(false,'Πρόβλημα στην εισαγωγή του χρήστη (' + data.message + ')' );
+          alert(false,'Πρόβλημα στην εισαγωγή του χρήστη (' + data.message + ')' );
           $('#frmUser')[0].reset();
-          // console.log(data.message);
       }
     });
 
@@ -75,20 +69,18 @@ function createTbody(data){
 
   $("#userTable > tbody").empty();
 
-  // console.log("CreateTBody", data);
   const len = data.length;
-  for (let i=0; i<len; i++){
+  for (let i = 0; i < len; i++){
     let username = data[i].username;
     let name = data[i].name;
     let surname = data[i].surname;
     let email = data[i].email;
     let address = data[i].address.area + ", " + data[i].address.road;
     let phone = "";
-    for (let x=0; x<data[i].phone.length; x++ ){
+    for (let x = 0; x < data[i].phone.length; x++ ){
       phone = phone + data[i].phone[x].type + ":" + data[i].phone[x].number + "<br>"
     }
     
-    // console.log(username, name);
 
     let tr_str = "<tr>" +
       "<td>" + username + "</td>" +
@@ -98,14 +90,36 @@ function createTbody(data){
       "<td>" + address + "</td>" +
       "<td>" + phone + "</td>" +      
       "<td>" +
-          "<button class='btnUpdate btn btn-primary' value=\'"+username+"\'>Τροποποίηση</button> " +
-          "<button class='btnDelete btn btn-primary' value=\'"+username+"\'>Διαγραφή</button>" +
+          "<button class='btnUpdate btn btn-secondary' value=\'" + username + "\'>Τροποποίηση</button> " +
+          "<button class='btnDelete btn btn-primary' value=\'" + username + "\'>Διαγραφή</button>" +
       "</td>" + 
       "</tr>";
 
     $("#userTable tbody").append(tr_str);
   }
 }
+
+$('#userTable').off('click', '.btnDelete').on('click', '.btnDelete', function() {
+  let username = $(this).val()
+  $.ajax({
+    url: "http://localhost:3000/api/users/" + username,
+    type: "delete",
+    dataType: "JSON"
+  })
+  .done(function(response) {
+    let data = response.data
+    let status = response.status
+  
+    if(status) {
+      console.log(true, 'Επιτυχής διαγραφή χρήστη')
+      alert(true, 'Επιτυχής διαγραφή χρήστη')
+      window.location.replace("http://localhost:3000/user/find.html")
+    } else {
+      console.log(false, 'Πρόβλημα στη διαγραφή του χρήστη (' + data.mesage + ')')
+      alert(false, 'Πρόβλημα στη διαγραφή του χρήστη (' + data.mesage + ')')
+    }
+  })
+})
 
 function alert(status, message){
   if (status){

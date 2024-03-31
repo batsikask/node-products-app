@@ -8,6 +8,7 @@ exports.findAll = async (req, res) => {
         res.status(200).json({data: result});
         logger.debug("Success in reading all users")
     } catch (err) {
+        res.status(404).json({data: err})
         logger.error(`Error while fetching all users -- ${err}`)
     }
 
@@ -21,6 +22,7 @@ exports.findOne = async (req, res) => {
         res.status(200).json({data: result});
         logger.debug(`Found a user: ${result}`)
     } catch (err) {
+        res.status(404).json({data: err})
         logger.error(`Error while fetching user -- ${err}`)
     }
 }
