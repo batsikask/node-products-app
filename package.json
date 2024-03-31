@@ -1,8 +1,8 @@
 {
-  "name": "app1",
+  "name": "products-app-mongodb",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CRUD App using NodeJs and MongoDB",
+  "main": "app.js",
   "scripts": {
     "start": "node --env-file=.env server.js",
     "test": "jest",
